@@ -8,7 +8,7 @@ import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 public class Tile extends AbstractActor {
-	private static final String TAG = Board.class.getName();
+	private static final String TAG = Tile.class.getName();
 
 	private float regionHeight;
 	private float regionWidth;
