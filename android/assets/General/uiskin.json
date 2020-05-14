@@ -1,0 +1,196 @@
+{
+com.badlogic.gdx.graphics.Color: {
+	tan: { r: 0.9647059, g: 0.69803923, b: 0.41960785, a: 1 },
+	green: { r: 0.5764706, g: 0.76862746, b: 0.49019608, a: 1 },
+	white: { r: 1, g: 1, b: 1, a: 1 },
+	light-tan: { r: 0.9882353, g: 0.8980392, b: 0.8039216, a: 1 },
+	blue: { r: 0.24705882, g: 0.65882355, b: 0.8627451, a: 1 }
+},
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	title-font: { file: font-title-export.fnt },
+	label-font: { file: font-label-export.fnt },
+	button-font: { file: font-button-export.fnt }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	dialogDim: {
+		name: white,
+		color: { a: 1, b: 0.2, g: 0.2, r: 0.2 }
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default: { background: progress-bar, knob: progress-bar-knob, knobBefore: progress-bar-before-knob },
+	default-vertical: { background: progress-bar, knob: progress-bar-knob, knobBefore: progress-bar-before-knob },
+	default-horizontal: { background: progress-bar, knob: progress-bar-knob, knobBefore: progress-bar-before-knob }
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: { font: button-font, up: button, down: button-down },
+	toggle-hover: {
+		font: button-font,
+		up: button-alt,
+		down: button-toggle-down,
+		over: button-toggle,
+		checked: button-toggle-alt,
+		checkedOver: button-toggle-down
+	},
+	toggle: { font: button-font, up: button-toggle, down: button-toggle-down, checked: button-toggle-down },
+	hover: { font: button-font, up: button-alt, down: button-toggle-down, over: button-toggle }
+},
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: { up: button, down: button-down }
+},
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-vertical: { handle: split-pane },
+	default-horizontal: { handle: split-pane }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: { background: touchpad, knob: touchpad-knob }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: { up: button, down: button-down },
+	toggle-hover: {
+		up: button-alt,
+		down: button-toggle-down,
+		over: button-toggle,
+		checked: button-toggle-alt,
+		checkedOver: button-toggle-down
+	},
+	toggle: { up: button-toggle, down: button-toggle-down, checked: button-toggle-down },
+	hover: { up: button-alt, down: button-toggle-down, over: button-toggle },
+	switch: { up: switch-off, down: switch, checked: switch }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window,
+		titleFont: button-font,
+		titleFontColor: { a: 1, b: 1, g: 1, r: 1 }
+	},
+	dialog: {
+		background: window,
+		titleFont: button-font,
+		titleFontColor: { a: 1, b: 1, g: 1, r: 1 },
+		stageBackground: light-tan
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.41960785, g: 0.69803923, r: 0.9647059 },
+		background: textfield,
+		cursor: cursor,
+		selection: blue,
+		messageFont: label-font,
+		messageFontColor: { a: 1, b: 0.8039216, g: 0.8980392, r: 0.9882353 }
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: list,
+		hScroll: scrollbar-h,
+		hScrollKnob: scrollbar-knob-h,
+		vScroll: scrollbar-v,
+		vScrollKnob: scrollbar-knob-v
+	},
+	android: { background: list, hScrollKnob: scrollbar-h-knob-android, vScrollKnob: scrollbar-knob-v-android },
+	no-bg: {
+		hScroll: scrollbar-h,
+		hScrollKnob: scrollbar-knob-h,
+		vScroll: scrollbar-v,
+		vScrollKnob: scrollbar-knob-v
+	},
+	android-no-bg: { hScrollKnob: scrollbar-h-knob-android, vScrollKnob: scrollbar-knob-v-android }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.41960785, g: 0.69803923, r: 0.9647059 }
+	},
+	green: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	light-tan: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.8039216, g: 0.8980392, r: 0.9882353 }
+	},
+	button: { font: button-font },
+	title: {
+		font: title-font,
+		fontColor: { a: 1, b: 1, g: 1, r: 1 }
+	},
+	blue: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 }
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: label-font,
+		fontColorSelected: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 },
+		fontColorUnselected: { a: 1, b: 0.8039216, g: 0.8980392, r: 0.9882353 },
+		selection: blue
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkbox,
+		checkboxOff: checkbox-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	alt: {
+		checkboxOn: checkbox,
+		checkboxOff: checkbox-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		checkedFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	switch-alt: {
+		checkboxOn: switch,
+		checkboxOff: switch-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 },
+		checkedFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	switch: {
+		checkboxOn: switch,
+		checkboxOff: switch-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	radio-alt: {
+		checkboxOn: radio-button,
+		checkboxOff: radio-button-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 },
+		checkedFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	},
+	radio: {
+		checkboxOn: radio-button,
+		checkboxOff: radio-button-off,
+		font: label-font,
+		fontColor: { a: 1, b: 0.8627451, g: 0.65882355, r: 0.24705882 },
+		downFontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 }
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+	default: { plus: plus, minus: minus, selection: blue }
+},
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-vertical: { background: slider-bar-v, knob: slider-bar-knob },
+	default-horizontal: { background: slider-bar-h, knob: slider-bar-knob }
+},
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: label-font,
+		fontColor: { a: 1, b: 0.49019608, g: 0.76862746, r: 0.5764706 },
+		background: select-box,
+		scrollStyle: default,
+		listStyle: default
+	}
+}
+}
