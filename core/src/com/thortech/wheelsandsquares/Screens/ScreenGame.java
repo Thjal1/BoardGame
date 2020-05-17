@@ -3,6 +3,7 @@ package com.thortech.wheelsandsquares.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thortech.wheelsandsquares.AbstractGameScreen;
@@ -22,8 +23,7 @@ public class ScreenGame extends AbstractGameScreen {
     private static final String TAG = com.thortech.wheelsandsquares.Screens.ScreenGame.class.getName();
 
     private GameLogics logics;
-    private Level.TileColours[][] board;
-    private Level.WheelTypes[][] wheelPlacements;
+    private Array<Array<Level.TileColours>> board = new Array<Array<Level.TileColours>>(); //private Level.WheelTypes[][] wheelPlacements;
 
     private OrthographicCamera cameraGame;      //For the game play
 
@@ -31,6 +31,8 @@ public class ScreenGame extends AbstractGameScreen {
     private Hud hud;
     private DebugHud debugHud;
     private boolean debugPauseCamera = true;
+
+
 
     public ScreenGame(WheelsAndSquares _game) {
             super(_game);
@@ -49,7 +51,7 @@ public class ScreenGame extends AbstractGameScreen {
             logics = new GameLogics();
 
             board = logics.getBoard();
-            wheelPlacements = logics.getInitialWheelplacements();
+            //wheelPlacements = logics.getInitialWheelplacements();
 
 
 
@@ -108,9 +110,8 @@ public class ScreenGame extends AbstractGameScreen {
         //Let the fun begin
         game.batch.setProjectionMatrix(cameraGame.combined);
         game.batch.begin();
-        //Render the background
-        //Render obstacles;
-        //Render Butterflys
+        //Render the board
+        //board[0][0].render(delta);
         game.batch.end();
 
         /*

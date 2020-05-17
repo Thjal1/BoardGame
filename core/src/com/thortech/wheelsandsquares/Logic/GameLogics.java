@@ -1,6 +1,7 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.thortech.wheelsandsquares.Logic.Level;
 import com.thortech.wheelsandsquares.Settings;
 
@@ -81,7 +82,7 @@ public class GameLogics {
 		}
 	}
 
-	public Level.TileColours[][] getBoard()
+	public Array<Array<Level.TileColours>> getBoard()
 	{
 		return level.getTileArray();
 	}

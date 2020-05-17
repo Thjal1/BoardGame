@@ -11,6 +11,7 @@ def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
 project.ext.assetsDir = new File("../android/assets")
 
 task runGame(dependsOn: classes, type: JavaExec) {
+//task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in

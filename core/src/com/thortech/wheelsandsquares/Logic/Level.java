@@ -1,6 +1,7 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,10 @@ public class Level {
 	private int numbersOfTilesY;
 	private Random random = new Random();
 
-	private TileColours[][] tileArray;
+//	private TileColours[][] tileArray;
 	private WheelTypes[][] wheelArray;
+
+	private Array<Array<TileColours>> tileArray = new Array<Array<TileColours>>();
 
 	public enum TileColours {
 		EMPTY(0), RED(1), BLUE(2), GREEN(3), BLACK(4), YELLOW(5);
@@ -107,7 +110,8 @@ public class Level {
 	public Level()
 	{
 		int maxSize = 100;
-		tileArray = new TileColours[maxSize][maxSize];
+		//tileArray = new TileColours[maxSize][maxSize];
+
 		wheelArray = new WheelTypes[maxSize][maxSize];
 		LoadLevel();
 
@@ -140,8 +144,9 @@ public class Level {
 			//Fill the tileArray with blank tiles
 
 			for (int x = 0; x < numbersOfTilesX; x++) {
+				tileArray.add(new Array<TileColours>());
 				for (int y = 0; y < numbersOfTilesY; y++) {
-					tileArray[x][y] = TileColours.EMPTY;
+					tileArray.get(x).add(TileColours.EMPTY);
 					wheelArray[x][y] = WheelTypes.EMPTY;
 				}
 			}
@@ -154,13 +159,13 @@ public class Level {
 				ranValueX = random.nextInt(numbersOfTilesX);
 				ranValueY = random.nextInt(numbersOfTilesY);
 
-				if (tileArray[ranValueX][ranValueY] == TileColours.EMPTY) {
+				if (tileArray.get(ranValueX).get(ranValueY) == TileColours.EMPTY){
 					int ranColour = random.nextInt(4) + 1;    //There are five colours to choose from
 					TileColours tileColour = TileColours.getEnum(ranColour);
 					//tileColour.value = ranColour;
 					WheelTypes wheelType = WheelTypes.getEnum(ranColour);
 					//wheelType.value = ranColour;
-					tileArray[ranValueX][ranValueY] = tileColour;
+					tileArray.get(ranValueX).set(ranValueY, tileColour);
 					wheelArray[ranValueX][ranValueY] = wheelType;
 					i++;
 				} else {
@@ -202,7 +207,7 @@ public class Level {
 	public TileColours getTileColour(int x, int y)
 	{
 		if(x >= 0 && x <= numbersOftilesX && y >= 0 && y <= numbersOfTilesY) {
-			return tileArray[x][y];
+			return tileArray.get(x).get(y);
 		}
 		return TileColours.EMPTY;
 	}
@@ -215,7 +220,7 @@ public class Level {
 		return WheelTypes.EMPTY;
 	}
 
-	public 	TileColours[][] getTileArray()
+	public Array<Array<TileColours>> getTileArray()
 	{
 		return tileArray;
 	}
