@@ -3,8 +3,6 @@ package com.thortech.wheelsandsquares.Actors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.thortech.wheelsandsquares.Actors.AbstractActor;
-import com.thortech.wheelsandsquares.Actors.Tile;
 import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
@@ -14,15 +12,19 @@ import com.thortech.wheelsandsquares.WheelsAndSquares;
 public class Board extends AbstractActor {
     private static final String TAG = com.thortech.wheelsandsquares.Actors.Board.class.getName();
 
+    public static final int differentKindsOfColours = Tile.differentKindsOfColours;
+
     private float regionHeight;
     private float regionWidth;
     private Vector3 centerV3;
     private Texture boardImage;
-    private Array<Tile> tiles= new Array<Tile>();
     private int numberOfTilesX;
     private int NumberOfTilesY;
 
     private float elapsedTime = 0;
+
+    private Array<Array<Tile>> tiles = new Array<Array<Tile>>();
+    private Array<Array<Wheel>> wheels = new Array<Array<Wheel>>();
 
     public Board(WheelsAndSquares _game)
     {
@@ -30,24 +32,60 @@ public class Board extends AbstractActor {
         create();
     }
 
-
-    private void create(){
-
+    private void create()
+    {
         regionHeight = Settings.PHYSICALSCALE;
         regionWidth = Settings.PHYSICALSCALE;
 
-
         centerV3 = new Vector3(0,0,0);
+    }
 
-        Array<Tile> tiles= new Array<Tile>();
+    public void setEmptyBoard(int numbersOfTilesX, int numbersOfTilesY)
+    {
+        for (int x = 0; x < numbersOfTilesX; x++) {
+            tiles.add(new Array<Tile>());
+            wheels.add(new Array<Wheel>());
+            for (int y = 0; y < numbersOfTilesY; y++) {
+                tiles.get(x).add(new Tile(game));
+                wheels.get(x).add(new Wheel(game));
+            }
+        }
+    }
 
+    public int getTileColourValue(int x, int y)
+    {
+        return tiles.get(x).get(y).getColourValue();
+    }
 
+    public int getWheelTypeValue(int x, int y)
+    {
+        return wheels.get(x).get(y).getTypeValue();
+    }
+
+    public void setTileColour(int x, int y, int colourNumber)
+    {
+        Tile.TileColours colour = Tile.TileColours.getEnum(colourNumber);
+        tiles.get(x).get(y).setColour(colour);
+    }
+
+    public void setWheelType(int x, int y, int typeNumber)
+    {
+        Wheel.WheelTypes type = Wheel.WheelTypes.getEnum(typeNumber);
+        wheels.get(x).get(y).setType(type);
     }
 
     @Override
-    public void render (float dt) {
+    public void render (float dt)
+    {
 
         elapsedTime += dt;
+
+        for (Array<Tile> arrayTiles : tiles) {
+            for (Tile tile : arrayTiles)
+            {
+                tile.render(dt);
+            }
+        }
     }
 
     public Vector3 getPos(){

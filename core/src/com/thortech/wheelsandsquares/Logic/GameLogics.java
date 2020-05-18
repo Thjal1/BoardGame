@@ -1,8 +1,6 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
-import com.thortech.wheelsandsquares.Logic.Level;
 import com.thortech.wheelsandsquares.Settings;
 
 import java.util.Random;
@@ -31,23 +29,12 @@ public class GameLogics {
 			//Get the maximum level number the user has reached.
 			maxLevelReached = Settings.getLevelReachedByPlayer();
 
-			level = new Level();
 			buildLevel(maxLevelReached);
 		}
 		catch (Exception ex)
 		{
 			Gdx.app.log(TAG, ex.getMessage());
 		}
-	}
-
-	public Level.TileColours getTileColour(int x, int y)
-	{
-		return level.getTileColour(x,y);
-	}
-
-	public Level.WheelTypes getWheeltype(int x, int y)
-	{
-		return level.getWheeltype(x,y);
 	}
 
 	public void buildLevel(int levelNumber)
@@ -73,22 +60,12 @@ public class GameLogics {
 			numbersOfTilesX += (int)levelNumber/10;
 			numbersOfTilesY += (int)levelNumber/10;
 
-			level.createLevel(randomSeed, levelNumber, numbersOfTilesX, numbersOfTilesY, numberOfClouredTiles, numberOfHelperwheels, numberOfFakeWheels, numberOfDraws);
+			level.createBoard(randomSeed, levelNumber, numbersOfTilesX, numbersOfTilesY, numberOfClouredTiles, numberOfHelperwheels, numberOfFakeWheels, numberOfDraws);
 			maxLevelsInGame++;
 		}
 		catch (Exception ex)
 		{
 			Gdx.app.log(TAG, ex.getMessage());
 		}
-	}
-
-	public Array<Array<Level.TileColours>> getBoard()
-	{
-		return level.getTileArray();
-	}
-
-	public Level.WheelTypes[][] getInitialWheelplacements()
-	{
-		return level.getWheelArray();
 	}
 }

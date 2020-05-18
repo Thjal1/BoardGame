@@ -3,10 +3,12 @@ package com.thortech.wheelsandsquares.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thortech.wheelsandsquares.AbstractGameScreen;
+import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Logic.GameLogics;
 import com.thortech.wheelsandsquares.Logic.Level;
 import com.thortech.wheelsandsquares.Scenes.DebugHud;
@@ -23,7 +25,7 @@ public class ScreenGame extends AbstractGameScreen {
     private static final String TAG = com.thortech.wheelsandsquares.Screens.ScreenGame.class.getName();
 
     private GameLogics logics;
-    private Array<Array<Level.TileColours>> board = new Array<Array<Level.TileColours>>(); //private Level.WheelTypes[][] wheelPlacements;
+    private Board board;     //= new Board(game);
 
     private OrthographicCamera cameraGame;      //For the game play
 
@@ -31,6 +33,7 @@ public class ScreenGame extends AbstractGameScreen {
     private Hud hud;
     private DebugHud debugHud;
     private boolean debugPauseCamera = true;
+    private Vector3 boardVector;
 
 
 
@@ -50,15 +53,11 @@ public class ScreenGame extends AbstractGameScreen {
 
             logics = new GameLogics();
 
-            board = logics.getBoard();
-            //wheelPlacements = logics.getInitialWheelplacements();
-
-
-
-
             //Load level
 
-
+            board = new Board(game);
+            boardVector = new Vector3(cameraGame.position.x, cameraGame.position.y, 0);
+            board.changePos(boardVector, true);
 
             //Humpty actor
         /*
@@ -111,7 +110,7 @@ public class ScreenGame extends AbstractGameScreen {
         game.batch.setProjectionMatrix(cameraGame.combined);
         game.batch.begin();
         //Render the board
-        //board[0][0].render(delta);
+        board.render(delta);
         game.batch.end();
 
         /*
