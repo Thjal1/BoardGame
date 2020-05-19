@@ -51,11 +51,11 @@ public class ScreenGame extends AbstractGameScreen {
 
             cameraGame.position.set(viewPort.getWorldWidth() / 2, viewPort.getWorldHeight() / 2, 0);
 
-            logics = new GameLogics();
+            logics = new GameLogics(game);
 
             //Load level
 
-            board = new Board(game);
+            board = logics.getCurrentBoard();
             boardVector = new Vector3(cameraGame.position.x, cameraGame.position.y, 0);
             board.changePos(boardVector, true);
 

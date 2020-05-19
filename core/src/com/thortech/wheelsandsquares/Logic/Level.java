@@ -9,7 +9,7 @@ import com.thortech.wheelsandsquares.WheelsAndSquares;
 import java.util.Random;
 
 
-public class Level extends AbstractActor {
+public class Level extends AbstractActor{
 	public static final String TAG = com.thortech.wheelsandsquares.Logic.Level.class.getName();
 
 	private int levelSeed;            //Seed number explaining how the level is build.
@@ -17,12 +17,11 @@ public class Level extends AbstractActor {
 	private int numbersOfTilesY;
 	private Random random = new Random();
 
-	private Board board = new Board(game);
+	private Board board;
 
 
-	public Level(WheelsAndSquares _game) {
+	public Level (WheelsAndSquares _game) {
 		super(_game);
-
 		LoadLevel();
 	}
 
@@ -38,7 +37,7 @@ public class Level extends AbstractActor {
 
 	@Override
 	public void dispose() {
-
+		board.dispose();
 	}
 
 	private void LoadLevel() {
@@ -50,8 +49,10 @@ public class Level extends AbstractActor {
 		}
 	}
 
-	public void createBoard(int randomSeed, int levelNumber, int numbersOfTilesX, int numbersOfTilesY, int numberOfColouredTiles, int numberOfHelperWheels, int numberOfFakeWheels, int numberOfDraws) {
+	public void createBoard(int randomSeed, int levelNumber, int numbersOfTilesX, int numbersOfTilesY, int numberOfColouredTiles, int numberOfHelperWheels, int numberOfFakeWheels, int numberOfDraws, WheelsAndSquares game) {
 		try {
+
+			board = new Board(game);
 
 			random.setSeed(randomSeed);
 
@@ -115,5 +116,10 @@ public class Level extends AbstractActor {
 		} catch (Exception ex) {
 			Gdx.app.log(TAG, ex.getMessage());
 		}
+	}
+
+	public Board getBoard()
+	{
+		return board;
 	}
 }

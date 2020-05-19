@@ -1,13 +1,17 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Gdx;
+import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Settings;
+import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.Random;
 
 public class GameLogics {
 
 	public static final String TAG = com.thortech.wheelsandsquares.Logic.GameLogics.class.getName();
+
+	private WheelsAndSquares game;
 
 	private static int maxLevelsInGame;
 	private int drawsMade;
@@ -23,12 +27,13 @@ public class GameLogics {
 	private int randomSeedMax;
 	private Random random;
 
-	public GameLogics()
+	public GameLogics(WheelsAndSquares game)
 	{
 		try {
+			this.game = game;
 			//Get the maximum level number the user has reached.
+			level = new Level(game);
 			maxLevelReached = Settings.getLevelReachedByPlayer();
-
 			buildLevel(maxLevelReached);
 		}
 		catch (Exception ex)
@@ -60,12 +65,16 @@ public class GameLogics {
 			numbersOfTilesX += (int)levelNumber/10;
 			numbersOfTilesY += (int)levelNumber/10;
 
-			level.createBoard(randomSeed, levelNumber, numbersOfTilesX, numbersOfTilesY, numberOfClouredTiles, numberOfHelperwheels, numberOfFakeWheels, numberOfDraws);
+			level.createBoard(randomSeed, levelNumber, numbersOfTilesX, numbersOfTilesY, numberOfClouredTiles, numberOfHelperwheels, numberOfFakeWheels, numberOfDraws, game);
 			maxLevelsInGame++;
 		}
 		catch (Exception ex)
 		{
 			Gdx.app.log(TAG, ex.getMessage());
 		}
+	}
+
+	public Board getCurrentBoard(){
+		return level.getBoard();
 	}
 }

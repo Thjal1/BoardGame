@@ -1,5 +1,6 @@
 package com.thortech.wheelsandsquares.Actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.thortech.wheelsandsquares.Settings;
@@ -53,11 +54,13 @@ public class Tile extends AbstractActor {
 
 	private void create() {
 
-		String file = "";
+		String file = "GameGraphics/TileEmpty128.png";
 		regionHeight = Settings.PHYSICALSCALE;
 		regionWidth = Settings.PHYSICALSCALE;
 
 		centerV3 = new Vector3(0, 0, 0);
+
+		tileImage = new Texture(Gdx.files.internal(file));
 
 		//switch (type)
 	}
