@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thortech.wheelsandsquares.AbstractGameScreen;
 import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Logic.GameLogics;
-import com.thortech.wheelsandsquares.Logic.Level;
 import com.thortech.wheelsandsquares.Scenes.DebugHud;
 import com.thortech.wheelsandsquares.Scenes.Hud;
 import com.thortech.wheelsandsquares.Settings;
@@ -41,7 +40,10 @@ public class ScreenGame extends AbstractGameScreen {
             super(_game);
             cameraGame = new OrthographicCamera();
 
-            viewPort = new StretchViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, cameraGame);
+            //viewPort = new StretchViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, cameraGame);
+            viewPort = new ExtendViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, Settings.PHYSICALWIDTH*2, Settings.PHYSICALHEIGHT*2, cameraGame);
+            viewPort.apply(true);
+
 
             hud = new Hud(game);
 
@@ -79,17 +81,9 @@ public class ScreenGame extends AbstractGameScreen {
     public void update(float dt) {
         handlInput(dt);
 
-        if (!debugPauseCamera) {
-            //Todo: change in to having humpty in the middle.
+        if (!debugPauseCamera)
             cameraGame.position.x += 100 * dt;
         }
-
-        }
-
-//BACKGROUND
-//DECORATION1
-// Obstacle array
-//Bonuses array
 
     @Override
     public void render(float delta) {
@@ -129,9 +123,10 @@ public class ScreenGame extends AbstractGameScreen {
     }
 
     @Override
-    public void resize(int _width, int _height) {
-        Settings.resizeScreen(_width, _height);
-        viewPort.update(_width, _height, true);
+    //Input in pixels
+    public void resize(int width, int height) {
+        Settings.resizeScreen(width, height);
+        viewPort.update(width, height, true);
         game.batch.setProjectionMatrix(cameraGame.combined);
     }
 

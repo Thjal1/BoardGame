@@ -33,25 +33,17 @@ public class Settings {
     private static int seedForRandomMax = 10000000;
     private static int levelReachedByPlayer = 1;
 
-/*
-    public static final float VIEWPORT_WIDTH_MIN = 25.0f;
-    public static final float VIEWPORT_WIDTH_MAX = 50.0f;
-    public static final float VIEWPORT_HEIGHT_MIN = 10.0f;
-    public static final float VIEWPORT_HEIGHT_MAX = 20.0f;
-*/
-public static final float V_WIDTH = 1280; //Baseline for screen size
-    public static final float V_HEIGHT = 720;
+    public static final float SCREENPIXELWIDTH = 1280; //Baseline for screen size
+    public static final float SCREENPIXELHEIGHT = 720;
 
-    public static final float PHYSICALWIDTH = 10.0f;   //Size of the physical world width
+    public static final float PHYSICALWIDTH = 1.0f;    //Size of the physical world widthin meters, the stage of the game
     public static float PHYSICALHEIGHT;                //Size of the physical world height - calculated in the constructor
     public static float PHYSICALSCALE;                 //Scale ratio from screen size to physical world - calculated in the constructor
 
-    public static final int TILE_SIZE = 32;
-
     //Make it a singleton
     private Settings(){
-        PHYSICALHEIGHT = PHYSICALWIDTH * (V_HEIGHT/V_WIDTH);
-        PHYSICALSCALE = PHYSICALWIDTH / V_WIDTH;
+        PHYSICALHEIGHT = PHYSICALWIDTH * (SCREENPIXELHEIGHT / SCREENPIXELWIDTH);
+        PHYSICALSCALE = PHYSICALWIDTH / SCREENPIXELWIDTH;
     }
     public void init() {
         loadAll();
@@ -103,16 +95,16 @@ public static final float V_WIDTH = 1280; //Baseline for screen size
     public static Music getThemeMusic() {
         return themeMusic;
     }
-    public static void setThemeMusic(Music _themeMusic) {
-        themeMusic = _themeMusic;
+    public static void setThemeMusic(Music themeMusic) {
+        Settings.themeMusic = themeMusic;
         //Update the new music
     }
     public static float getThemeMusicLevel() {
         return themeMusicLevel;
     }
 
-    public static void setThemeMusicLevel(float _themeMusicLevel) {
-        themeMusicLevel = _themeMusicLevel;
+    public static void setThemeMusicLevel(float themeMusicLevel) {
+        Settings.themeMusicLevel = themeMusicLevel;
     }
 
     public static float getSoundLevel() {
@@ -124,25 +116,25 @@ public static final float V_WIDTH = 1280; //Baseline for screen size
     }
 
 
-    public static void resizeScreen(float _width, float _height) {
-        PHYSICALHEIGHT = PHYSICALWIDTH * (_height/_width);
-        PHYSICALSCALE = PHYSICALWIDTH / _width;
+    public static void resizeScreen(float width, float height) {
+        PHYSICALHEIGHT = PHYSICALWIDTH * (height/width);
+        PHYSICALSCALE = PHYSICALWIDTH / width;
     }
 
     public static int getScreenHeight() {
         return screenHeight;
     }
 
-    public static void setScreenHeight(int _screenHeight) {
-        screenHeight = _screenHeight;
+    public static void setScreenHeight(int screenHeight) {
+        Settings.screenHeight = screenHeight;
     }
 
     public static int getScreenWidth() {
         return screenWidth;
     }
 
-    public static void setScreenWidth(int _screenWidth) {
-        screenWidth = _screenWidth;
+    public static void setScreenWidth(int screenWidth) {
+        Settings.screenWidth = screenWidth;
     }
 
     public static int getAspectRatio() { return aspectRatio;}
@@ -151,24 +143,24 @@ public static final float V_WIDTH = 1280; //Baseline for screen size
         return vibrate;
     }
 
-    public static void setVibrate(boolean _vibrate) {
-        vibrate = _vibrate;
+    public static void setVibrate(boolean vibrate) {
+        Settings.vibrate = vibrate;
     }
 
     public static boolean isMuteMusicOff() {
         return muteMusicOff;
     }
 
-    public static void setMuteMusicOff(boolean _muteMusicOff) {
-        muteMusicOff = _muteMusicOff;
+    public static void setMuteMusicOff(boolean muteMusicOff) {
+        Settings.muteMusicOff = muteMusicOff;
     }
 
     public static boolean isMuteSoundOff() {
         return muteSoundOff;
     }
 
-    public static void setMuteSoundOff(boolean _muteSoundOff) {
-        muteSoundOff = _muteSoundOff;
+    public static void setMuteSoundOff(boolean muteSoundOff) {
+        Settings.muteSoundOff = muteSoundOff;
     }
 
     public static void calculateAspectRatio(){

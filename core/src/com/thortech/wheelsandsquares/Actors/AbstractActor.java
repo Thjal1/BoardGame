@@ -9,9 +9,11 @@ import com.thortech.wheelsandsquares.WheelsAndSquares;
 public abstract class AbstractActor {
 
 	protected WheelsAndSquares game;
+	protected static String objName;
+	protected static int objNumber = 0;
 
-	public AbstractActor (WheelsAndSquares _game) {
-		game = _game;
+	public AbstractActor (WheelsAndSquares game) {
+		this.game = game;
 	}
 
 	public abstract void changePos(Vector3 v3, boolean center);

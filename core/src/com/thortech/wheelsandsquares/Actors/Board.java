@@ -18,8 +18,6 @@ public class Board extends AbstractActor {
     private float regionWidth;
     private Vector3 centerV3;
     private Texture boardImage;
-    private int numberOfTilesX;
-    private int NumberOfTilesY;
 
     private float elapsedTime = 0;
 
@@ -42,11 +40,17 @@ public class Board extends AbstractActor {
 
     public void setEmptyBoard(int numbersOfTilesX, int numbersOfTilesY)
     {
+        float positionX, positionY = 0;
+        float boardCornerPositionX = ((Settings.PHYSICALWIDTH / Tile.getPhysicalWidth() - numbersOfTilesX) /2) * Tile.getPhysicalWidth();
+        float boardCornerPositionY = ((Settings.PHYSICALHEIGHT / Tile.getPhysicalHeight() - numbersOfTilesY) /2) * Tile.getPhysicalHeight();
+
         for (int x = 0; x < numbersOfTilesX; x++) {
+            positionX = x*Tile.getPhysicalWidth() + boardCornerPositionX;
             tiles.add(new Array<Tile>());
             wheels.add(new Array<Wheel>());
             for (int y = 0; y < numbersOfTilesY; y++) {
-                tiles.get(x).add(new Tile(game));
+                positionY = y*Tile.getPhysicalHeight() + boardCornerPositionY;
+                tiles.get(x).add(new Tile(game, new Vector3(positionX, positionY,0)));
                 wheels.get(x).add(new Wheel(game));
             }
         }
@@ -77,7 +81,6 @@ public class Board extends AbstractActor {
     @Override
     public void render (float dt)
     {
-
         elapsedTime += dt;
 
         for (Array<Tile> arrayTiles : tiles) {
