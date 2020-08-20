@@ -60,7 +60,7 @@ public class WheelsAndSquares extends Game {
 
 	@Override
 	public void resize(int width, int height) {
-
+		getScreen().resize(width, height);
 	}
 
 	@Override

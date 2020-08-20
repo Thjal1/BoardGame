@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
 import com.thortech.wheelsandsquares.AbstractGameScreen;
 import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Logic.GameLogics;
@@ -39,11 +37,12 @@ public class ScreenGame extends AbstractGameScreen {
     public ScreenGame(WheelsAndSquares _game) {
             super(_game);
             cameraGame = new OrthographicCamera();
+            cameraGame.setToOrtho(false, Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT);
 
             //viewPort = new StretchViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, cameraGame);
-            viewPort = new ExtendViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, Settings.PHYSICALWIDTH*2, Settings.PHYSICALHEIGHT*2, cameraGame);
+            //viewPort = new ExtendViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, Settings.PHYSICALWIDTH*2, Settings.PHYSICALHEIGHT*2, cameraGame);
+            viewPort = new FitViewport(cameraGame.viewportWidth, cameraGame.viewportHeight, cameraGame);
             viewPort.apply(true);
-
 
             hud = new Hud(game);
 
@@ -81,8 +80,6 @@ public class ScreenGame extends AbstractGameScreen {
     public void update(float dt) {
         handlInput(dt);
 
-        if (!debugPauseCamera)
-            cameraGame.position.x += 100 * dt;
         }
 
     @Override
@@ -102,6 +99,8 @@ public class ScreenGame extends AbstractGameScreen {
 
         //Let the fun begin
         game.batch.setProjectionMatrix(cameraGame.combined);
+        cameraGame.update();
+
         game.batch.begin();
         //Render the board
         board.render(delta);
@@ -127,7 +126,6 @@ public class ScreenGame extends AbstractGameScreen {
     public void resize(int width, int height) {
         Settings.resizeScreen(width, height);
         viewPort.update(width, height, true);
-        game.batch.setProjectionMatrix(cameraGame.combined);
     }
 
     @Override
