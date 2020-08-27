@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class Settings {
     public static final String TAG = com.thortech.wheelsandsquares.Settings.class.getName();
-    public static final com.thortech.wheelsandsquares.Settings instance = new com.thortech.wheelsandsquares.Settings();
+    public static Settings instance = new Settings();
 
     public static final Skin skin = new Skin(Gdx.files.internal("General/uiskin.json"));
 
@@ -23,28 +23,32 @@ public class Settings {
 
     private static boolean muteMusicOff;
     private static boolean muteSoundOff;
-    private static int screenHeight = 0;
-    private static int screenWidth = 0;
+    private static int screenHeightPixels;  //Is set by the launcher class
+    private static int screenWidthPixels;   //Is set by the launcher class
     private static int aspectRatio;
     private static Preferences preferences;
     private static final String preFile = "thortech_wheelsandsquares_settings.pre";
     
-    private static int seedForRandom =     1543981;
+    private static int seedForRandom =     1543982;//1543981;
     private static int seedForRandomMax = 10000000;
     private static int levelReachedByPlayer = 1;
 
-    public static final float SCREENPIXELWIDTH = 1280; //Baseline for screen size
-    public static final float SCREENPIXELHEIGHT = 720;
-
     public static final float PHYSICALWIDTH = 1.0f;    //Size of the physical world widthin meters, the stage of the game
-    public static float PHYSICALHEIGHT;                //Size of the physical world height - calculated in the constructor
+    public static float PHYSICALHEIGHT = 1.0f;         //Size of the physical world height - calculated in the constructor
     public static float PHYSICALSCALE;                 //Scale ratio from screen size to physical world - calculated in the constructor
 
     //Make it a singleton
     private Settings(){
-        PHYSICALHEIGHT = PHYSICALWIDTH * (SCREENPIXELHEIGHT / SCREENPIXELWIDTH);
-        PHYSICALSCALE = PHYSICALWIDTH / SCREENPIXELWIDTH;
+        PHYSICALSCALE = PHYSICALWIDTH / screenWidthPixels;
     }
+
+    public static Settings getInstance()
+    {
+        if (instance == null)
+            instance = new Settings();
+        return instance;
+    }
+
     public void init() {
         loadAll();
     }
@@ -54,8 +58,8 @@ public class Settings {
             preferences = Gdx.app.getPreferences(preFile);
 
             themeMusic = Gdx.audio.newMusic(Gdx.files.internal("General/thememusic.mp3"));
-            screenWidth = Gdx.graphics.getWidth();
-            screenHeight = Gdx.graphics.getHeight();
+            screenWidthPixels = Gdx.graphics.getWidth();
+            screenHeightPixels = Gdx.graphics.getHeight();
 
             themeMusicLevel = preferences.getFloat("music_level", 0.4f);
             soundLevel = preferences.getFloat("sound_level", 0.4f);
@@ -115,29 +119,33 @@ public class Settings {
         soundLevel = _soundLevel;
     }
 
+    /***
+     *
+     * @param width
+     * @param height
+     * @return aspect ratio in values 1, 2 and 3
+     */
+    public static int resizeScreenPixels(int width, int height) {
+        screenWidthPixels = width;
+        screenHeightPixels = height;
 
-    public static void resizeScreen(float width, float height) {
-        PHYSICALHEIGHT = PHYSICALWIDTH * (height/width);
-        PHYSICALSCALE = PHYSICALWIDTH / width;
+        return getAspectRatio();
     }
 
-    public static int getScreenHeight() {
-        return screenHeight;
+    public static int getScreenHeightPixels() {
+        return screenHeightPixels;
     }
 
-    public static void setScreenHeight(int screenHeight) {
-        Settings.screenHeight = screenHeight;
+    public static int getScreenWidthPixels() {
+        return screenWidthPixels;
     }
 
-    public static int getScreenWidth() {
-        return screenWidth;
+    public static int getAspectRatio() {
+        if (aspectRatio == 0)
+            resizeScreenPixels(screenWidthPixels, screenHeightPixels);
+        return aspectRatio;
     }
 
-    public static void setScreenWidth(int screenWidth) {
-        Settings.screenWidth = screenWidth;
-    }
-
-    public static int getAspectRatio() { return aspectRatio;}
 
     public static boolean isVibrate() {
         return vibrate;
@@ -164,8 +172,8 @@ public class Settings {
     }
 
     public static void calculateAspectRatio(){
-        if (screenHeight != 0 && screenWidth != 0) {
-            float ratioValue = ((float)screenWidth / (float)screenHeight);
+        if (screenHeightPixels != 0 && screenWidthPixels != 0) {
+            float ratioValue = ((float) screenWidthPixels / (float) screenHeightPixels);
             if (ratioValue <= 1.05) {aspectRatio = 1;}      //Equivalent to 1:1 (1)
             if (ratioValue > 1.05 && ratioValue <= 1.62) {aspectRatio = 2;}  //Equivalent to 4:3 (1.33)
             if (ratioValue > 1.62){aspectRatio = 3;}    //Equivalent to 16:9 / 16:10 (1.78)

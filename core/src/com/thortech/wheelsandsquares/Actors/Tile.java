@@ -3,7 +3,6 @@ package com.thortech.wheelsandsquares.Actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
-import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.HashMap;
@@ -11,16 +10,15 @@ import java.util.Map;
 
 public class Tile extends AbstractActor {
 	private static final String TAG = Tile.class.getName();
+	private static int objNumber = 0;
 
 	public static final int differentKindsOfColours = 4;
 
-	static private float physicalHeight = 0.1f;
-	static private float physicalWidth = 0.1f;
-
-	private float regionHeight;
-	private float regionWidth;
+	private static float physicalHeight = 0.1f;	//static: All tile objects are to allways have the same size
+	private static float physicalWidth = 0.1f;	//static: All tile objects are to allways have the same size
 	private Vector3 centerV3;
-	private Texture tileImage;
+
+	private Texture tileTexture;
 	private float elapsedTime = 0;
 	private TileColours colour = TileColours.EMPTY;
 
@@ -63,15 +61,13 @@ public class Tile extends AbstractActor {
 	private void create() {
 
 		objNumber++;
-		objName = TAG + Integer.toString(objNumber);
+		objName = TAG + objNumber;
 
 		String file = "General/GameGraphics/TileEmpty128.png";
-		regionHeight = 32;
-		regionWidth = 32;
 
 		centerV3 = new Vector3(0, 0, 0);
 
-		tileImage = new Texture(Gdx.files.internal(file));
+		tileTexture = new Texture(Gdx.files.internal(file));
 
 		//switch (type)
 	}
@@ -83,13 +79,13 @@ public class Tile extends AbstractActor {
 	public void setColour(TileColours colour) {
 		this.colour = colour;
 		String file = "General/GameGraphics/Tile" + colour.toString() + "128.png";
-		tileImage = new Texture(Gdx.files.internal(file));
+		tileTexture = new Texture(Gdx.files.internal(file));
 	}
 
 	@Override
 	public void render(float dt) {
 		elapsedTime += dt;
-		game.batch.draw(tileImage, centerV3.x, centerV3.y, physicalWidth, physicalHeight);
+		game.batch.draw(tileTexture, centerV3.x, centerV3.y, physicalWidth, physicalHeight);
 	}
 
 	public Vector3 getPos() {
@@ -100,8 +96,8 @@ public class Tile extends AbstractActor {
 		if (center == false) {
 			this.centerV3 = v3;
 		} else {
-			this.centerV3.y = v3.y - regionWidth / 2;
-			this.centerV3.x = v3.x - regionHeight / 2;
+			this.centerV3.y = v3.y - physicalWidth / 2;
+			this.centerV3.x = v3.x - physicalHeight / 2;
 		}
 	}
 
@@ -118,6 +114,6 @@ public class Tile extends AbstractActor {
 	}
 
 	public void dispose() {
-
+		tileTexture.dispose();
 	}
 }

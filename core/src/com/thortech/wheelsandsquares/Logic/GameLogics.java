@@ -32,7 +32,7 @@ public class GameLogics {
 		try {
 			this.game = game;
 			//Get the maximum level number the user has reached.
-			level = new Level(game);
+			level = new Level();
 			maxLevelReached = Settings.getLevelReachedByPlayer();
 			buildLevel(maxLevelReached);
 		}
@@ -76,5 +76,10 @@ public class GameLogics {
 
 	public Board getCurrentBoard(){
 		return level.getBoard();
+	}
+
+	public void dispose()
+	{
+		level.getBoard().dispose();
 	}
 }

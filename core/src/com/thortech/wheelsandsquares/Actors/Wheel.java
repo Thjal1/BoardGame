@@ -1,8 +1,10 @@
 package com.thortech.wheelsandsquares.Actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.HashMap;
@@ -11,12 +13,16 @@ import java.util.Random;
 
 public class Wheel extends AbstractActor {
 	private static final String TAG = Wheel.class.getName();
+	private static int objNumber = 0;
 
-	private float regionHeight;
-	private float regionWidth;
+	private float physicalHeight = 0.1f;
+	private float physicalWidth = 0.1f;
 	private Vector3 centerV3;
-	private Texture wheelImage;
+	private Texture wheelTexture;
+	private Sprite wheelSprite;
 	private float elapsedTime = 0;
+	private String state = "";
+	private Vector2 fromCoordinates, toCoordinates;
 
 	private WheelTypes type = WheelTypes.EMPTY;
 
@@ -77,6 +83,11 @@ public class Wheel extends AbstractActor {
 			}
 			return WheelTypes.getEnum(wheelTypeValue);
 		}
+
+		public static int getRandomValue(int maxTileParts)
+		{
+			return getRandomEnum(maxTileParts).value;
+		}
 	}
 
 	public Wheel(WheelsAndSquares _game) {
@@ -84,12 +95,23 @@ public class Wheel extends AbstractActor {
 		create();
 	}
 
+	public Wheel(WheelsAndSquares game, Vector3 physicalCoordinates, Wheel.WheelTypes type)
+	{
+		super(game);
+		create();
+		changePos(physicalCoordinates, false);
+		setType(type);
+	}
+
 	private void create() {
 
-		regionHeight = Settings.PHYSICALSCALE;
-		regionWidth = Settings.PHYSICALSCALE;
+		objNumber++;
+		objName = TAG + objNumber;
 
 		centerV3 = new Vector3(0, 0, 0);
+		fromCoordinates = new Vector2(0,0);
+		toCoordinates = new Vector2(0, 0);
+		state = "StandStill";
 	}
 
 	public int getTypeValue() {
@@ -99,32 +121,48 @@ public class Wheel extends AbstractActor {
 	public void setType(WheelTypes type)
 	{
 		this.type = type;
+		String file = "General/GameGraphics/Wheel" + type.toString() + "128.png";
+		wheelTexture = new Texture(Gdx.files.internal(file));
+
+		wheelSprite = new Sprite(wheelTexture);
+
+		wheelSprite.setPosition(centerV3.x, centerV3.y);
+		wheelSprite.setSize(physicalWidth,physicalHeight);
 	}
 
 	@Override
 	public void render(float dt) {
-
 		elapsedTime += dt;
+		if(wheelSprite != null && type != WheelTypes.EMPTY)
+			game.batch.draw(wheelSprite, centerV3.x, centerV3.y, physicalWidth, physicalHeight);
 	}
 
-	public Vector3 getPos() {
+	public Vector3 getPhysicalPosistion() {
 		return centerV3;
 	}
+	public Vector2 getFromCoordinates() { return fromCoordinates; }
+	public Vector2 toCoordinates() { return toCoordinates; }
 
 	public void changePos(Vector3 v3, boolean center) {
 		if (center == false) {
 			this.centerV3 = v3;
 		} else {
-			this.centerV3.y = v3.y - regionWidth / 2;
-			this.centerV3.x = v3.x - regionHeight / 2;
+			this.centerV3.y = v3.y - physicalWidth / 2;
+			this.centerV3.x = v3.x - physicalHeight / 2;
 		}
 	}
 
-	public void setState(String _state) {
+	public void moveToCoordinate(Vector2 moveTo)
+	{
+		toCoordinates = moveTo;
+		setState("Moving");
+	}
 
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public void dispose() {
-
+		wheelSprite.getTexture().dispose();
 	}
 }

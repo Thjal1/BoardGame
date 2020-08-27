@@ -60,18 +60,6 @@ public class ScreenGame extends AbstractGameScreen {
             boardVector = new Vector3(cameraGame.position.x, cameraGame.position.y, 0);
             board.changePos(boardVector, true);
 
-            //Humpty actor
-        /*
-        humpty = new Humpty(game);
-            humptyVector = new Vector3(cameraGame.position.x, 100, 0);
-            humpty.changePos(humptyVector, false);
-        */
-
-        //Background
-        /*
-        Background backg1 = new Background(game, new Vector3(0, -8 * Settings.TILE_SIZE, 0));
-        backgrounds.add(backg1);
-*/
     }
 
     public void handlInput(float dt) {
@@ -124,7 +112,7 @@ public class ScreenGame extends AbstractGameScreen {
     @Override
     //Input in pixels
     public void resize(int width, int height) {
-        Settings.resizeScreen(width, height);
+        Settings.resizeScreenPixels(width, height);
         viewPort.update(width, height, true);
     }
 
@@ -148,7 +136,7 @@ public class ScreenGame extends AbstractGameScreen {
     @Override
     public void dispose() {
         //todo: dispose all the actors!
-        //humpty.dispose();
         ///hud.dispose();
+        logics.dispose();
     }
 }

@@ -1,15 +1,17 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.thortech.wheelsandsquares.Actors.AbstractActor;
 import com.thortech.wheelsandsquares.Actors.Board;
+import com.thortech.wheelsandsquares.Actors.Wheel;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.Random;
 
 
-public class Level extends AbstractActor{
+public class Level{
 	public static final String TAG = com.thortech.wheelsandsquares.Logic.Level.class.getName();
 
 	private int levelSeed;            //Seed number explaining how the level is build.
@@ -17,27 +19,10 @@ public class Level extends AbstractActor{
 	private int numbersOfTilesY;
 	private Random random = new Random();
 
-	private Board board;
+	private static Board board;
 
-
-	public Level (WheelsAndSquares _game) {
-		super(_game);
+	public Level () {
 		LoadLevel();
-	}
-
-	@Override
-	public void changePos(Vector3 v3, boolean center) {
-
-	}
-
-	@Override
-	public void render(float dt) {
-
-	}
-
-	@Override
-	public void dispose() {
-		board.dispose();
 	}
 
 	private void LoadLevel() {
@@ -81,6 +66,7 @@ public class Level extends AbstractActor{
 					board.setTileColour(ranValueX, ranValueY, ranColour);
 
 //					wheelArray.get(ranValueX).set(ranValueY, wheelType);
+					board.placeNewWheel(new Vector2(ranValueX, ranValueY), ranColour);
 					i++;
 				} else {
 					falseItterations++;
@@ -93,27 +79,28 @@ public class Level extends AbstractActor{
 			i = 0;
 
 			//Place fake wheels
-/*
 			do {
 				ranValueX = random.nextInt(numbersOfTilesX);
 				ranValueY = random.nextInt(numbersOfTilesY);
 
-				if (wheelArray.get(ranValueX).get(ranValueY) == WheelTypes.EMPTY) {
-					WheelTypes wheelType = WheelTypes.getRandomEnum(random.nextInt(2) + 1);
-					wheelArray.get(ranValueX).set(ranValueY, wheelType);
-					i++;
-				} else {
-					falseItterations++;
-					if (falseItterations > 100) {
-						break;
-					}
+				board.placeNewWheel(new Vector2(ranValueX, ranValueY), Wheel.WheelTypes.getRandomValue(random.nextInt(2) + 1));
+
+				i++;
+
+				falseItterations++;
+				if (falseItterations > 100) {
+					break;
 				}
-			} while (i < numberOfFakeWheels);
+			}
+			while (i < numberOfFakeWheels);
+
 			if (falseItterations >= 100) {
 				Gdx.app.log(TAG, "falseIttterations is more than 100");
 			}
-*/
-		} catch (Exception ex) {
+		}
+
+
+		catch (Exception ex) {
 			Gdx.app.log(TAG, ex.getMessage());
 		}
 	}
