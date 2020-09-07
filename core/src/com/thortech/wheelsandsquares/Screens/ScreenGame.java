@@ -136,7 +136,7 @@ public class ScreenGame extends AbstractGameScreen {
     @Override
     public void dispose() {
         //todo: dispose all the actors!
-        ///hud.dispose();
+        hud.dispose();
         logics.dispose();
     }
 }
