@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class Wheel extends AbstractActor {
 	private float elapsedTime = 0;
 	private String state = "";
 	private Vector2 fromCoordinates, toCoordinates;
+	private static Random random = new Random();
 
 	private WheelTypes type = WheelTypes.EMPTY;
 
@@ -39,7 +41,7 @@ public class Wheel extends AbstractActor {
 
 		private int value;
 		private static Map map = new HashMap<>();
-		private static Random random = new Random();
+
 
 		WheelTypes(int value) {
 			this.value = value;
@@ -112,6 +114,8 @@ public class Wheel extends AbstractActor {
 		fromCoordinates = new Vector2(0,0);
 		toCoordinates = new Vector2(0, 0);
 		state = "StandStill";
+
+		random.setSeed(Settings.getSeedForRandom());
 	}
 
 	public int getTypeValue() {

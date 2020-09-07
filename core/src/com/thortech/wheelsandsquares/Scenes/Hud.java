@@ -12,10 +12,10 @@ import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 /**
  * Created by ToHj on 19-02-2016.
- * ToDO: Modify for Humpty Dumpty game
+ * ToDO: Modify for the game
  */
 public class Hud {
-    private static final String TAG = com.thortech.wheelsandsquares.Scenes.Hud.class.getName();
+    private static final String TAG = Hud.class.getName();
 
     public Stage stage;
     private Viewport viewport;
@@ -49,6 +49,7 @@ public class Hud {
 
         Table table = new Table();
         table.top();
+        //table.center();
         table.setFillParent(true);
 
         countdownLabel = new Label(strB1.append(worldTimer), Settings.skin);//String.format("%03d", worldTimer), Settings.skin);
@@ -74,10 +75,7 @@ public class Hud {
         strB1.delete(0, strB1.capacity());
         countdownLabel.setText(strB1.append(worldTimer));
 
-        /*
-        game.batch.begin();
-        game.batch.end();
-         */
+        stage.draw();
     }
 
     public void addScore(int value){

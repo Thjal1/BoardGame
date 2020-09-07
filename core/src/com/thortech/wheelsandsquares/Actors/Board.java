@@ -1,11 +1,13 @@
 package com.thortech.wheelsandsquares.Actors;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.thortech.wheelsandsquares.Helpers.LogHelper;
 import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
@@ -85,10 +87,18 @@ public class Board extends AbstractActor {
         tiles.get(x).get(y).setColour(colour);
     }
 
-    public void placeNewWheel(Vector2 boardCoordinates, int typeNumber) throws Exception {
+    /**
+     *
+     * @param boardCoordinates
+     * @param typeNumber
+     * @return true: Wheel placed OK. False: Wheel not placed on the board
+     */
+    public boolean placeNewWheel(Vector2 boardCoordinates, int typeNumber) {
         //Are the coordinates within the bounds of the board?
         if(boardCoordinates.x > numbersOfTilesX || boardCoordinates.y > numbersOfTilesY || boardCoordinates.x < 0 || boardCoordinates.y < 0) {
-            throw new Exception("Wheel coordinates are set outside boundaries of the board");
+            LogHelper.Log(TAG, "Wheel coordinates are set outside boundaries of the board", Application.LOG_INFO);
+            return false;
+            //throw new Exception("Wheel coordinates are set outside boundaries of the board");
         }
 
         float wheelCornerPositionX = ((Settings.PHYSICALWIDTH / Tile.getPhysicalWidth() - numbersOfTilesX) /2) * Tile.getPhysicalWidth();
@@ -103,14 +113,19 @@ public class Board extends AbstractActor {
                     wheelIsFound = true;
             }
             //Wheel not found on the spot - create it.
-            if(!wheelIsFound)
+            if(!wheelIsFound){
                 wheels.add(new Wheel(game, physicalVector, Wheel.WheelTypes.getEnum(typeNumber)));
-            else
-                throw new Exception("Wheel coordinates are same as a all ready placed wheel");
+                return true;
+            }
+            else {
+                LogHelper.Log(TAG, "Wheel coordinates are same as a all ready placed wheel", Application.LOG_INFO);
+                return false;
+            }
         }
         //wheels is empty: create the new wheel
         else {
            wheels.add(new Wheel(game, physicalVector, Wheel.WheelTypes.getEnum(typeNumber)));
+           return true;
         }
     }
 

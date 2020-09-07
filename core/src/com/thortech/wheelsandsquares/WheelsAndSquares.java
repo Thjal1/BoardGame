@@ -1,10 +1,9 @@
 package com.thortech.wheelsandsquares;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.thortech.wheelsandsquares.Helpers.LogHelper;
 import com.thortech.wheelsandsquares.Screens.ScreenCredits;
 import com.thortech.wheelsandsquares.Screens.ScreenLoad;
 import com.thortech.wheelsandsquares.Screens.ScreenGame;
@@ -47,13 +46,15 @@ public class WheelsAndSquares extends Game {
 			screenCredits = new ScreenCredits(this);
 
 			setScreen(screenLoad);				//Testing
-
-			if(platformSpecific.isDebug())
-				Gdx.app.log(TAG, "Created OK");
+/*
+			Gdx.app.setLogLevel(Application.LOG_INFO);	//Make sure that intelliJ will be verbose in the run window, when calling the LogHelper.Log()
+			LogHelper.Log(TAG, "Created OK");
+*/
+			LogHelper.Log(TAG, "Created OK", Application.LOG_INFO);
 
 		}
 		catch (final Exception ex) {
-			Gdx.app.log(TAG, "create() failed", ex);
+			LogHelper.Log(TAG, "create() failed" + ex.getMessage(), Application.LOG_ERROR);
 			//TODO: Code for handling exceptions and/or exit the game OK.
 		}
 	}
@@ -78,7 +79,8 @@ public class WheelsAndSquares extends Game {
 
 	}
 
+	@Override
 	public void dispose(){
-
+		Gdx.app.exit();
 	}
 }

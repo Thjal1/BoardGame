@@ -11,7 +11,7 @@ public class PlatformSpecificDesktop implements PlatformSpecific {
     public PlatformSpecificDesktop()
     {
         //isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
-        isDebug = false;
+        isDebug = true;
     }
 
     @Override

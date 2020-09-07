@@ -88,24 +88,24 @@ public class ScreenGame extends AbstractGameScreen {
         //Let the fun begin
         game.batch.setProjectionMatrix(cameraGame.combined);
         cameraGame.update();
+        hud.update(delta);
 
         game.batch.begin();
         //Render the board
         board.render(delta);
+
         game.batch.end();
 
-        /*
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.getCamera().update();
         hud.update(delta);
-        hud.stage.draw();
-*/
+
         if (WheelsAndSquares.platformSpecific.isDebug()) {
-       /*
             game.batch.setProjectionMatrix(debugHud.stage.getCamera().combined);
             debugHud.setCameraXPos(cameraGame.position.x);
             debugHud.update(delta);
             debugHud.stage.draw();
- */
         }
     }
 

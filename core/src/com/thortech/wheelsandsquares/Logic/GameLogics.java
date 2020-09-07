@@ -1,7 +1,9 @@
 package com.thortech.wheelsandsquares.Logic;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.thortech.wheelsandsquares.Actors.Board;
+import com.thortech.wheelsandsquares.Helpers.LogHelper;
 import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
@@ -38,7 +40,7 @@ public class GameLogics {
 		}
 		catch (Exception ex)
 		{
-			Gdx.app.log(TAG, ex.getMessage());
+			LogHelper.Log(TAG, ex.getMessage(), Application.LOG_ERROR);
 		}
 	}
 
@@ -70,7 +72,7 @@ public class GameLogics {
 		}
 		catch (Exception ex)
 		{
-			Gdx.app.log(TAG, ex.getMessage());
+			LogHelper.Log(TAG, ex.getMessage(), Application.LOG_ERROR);
 		}
 	}
 

@@ -1,11 +1,13 @@
 package com.thortech.wheelsandsquares.Logic;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.thortech.wheelsandsquares.Actors.AbstractActor;
 import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Actors.Wheel;
+import com.thortech.wheelsandsquares.Helpers.LogHelper;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.Random;
@@ -30,13 +32,12 @@ public class Level{
 			//levelInformation = Gdx.app.getPreferences(levelFile);
 
 		} catch (Exception ex) {
-			Gdx.app.log(TAG, ex.getMessage());
+			LogHelper.Log(TAG, ex.getMessage(), Application.LOG_ERROR);
 		}
 	}
 
 	public void createBoard(int randomSeed, int levelNumber, int numbersOfTilesX, int numbersOfTilesY, int numberOfColouredTiles, int numberOfHelperWheels, int numberOfFakeWheels, int numberOfDraws, WheelsAndSquares game) {
 		try {
-
 			board = new Board(game);
 
 			random.setSeed(randomSeed);
@@ -47,7 +48,7 @@ public class Level{
 			this.numbersOftilesX = numbersOfTilesX;
 			this.numbersOfTilesY = numbersOfTilesY;
 
-			//TODO: Check if the level previously is made.
+			//TODO: Check if the level previously is made. Maybe not?
 
 			//Fill the tileArray with blank tiles
 			board.setEmptyBoard(numbersOfTilesX, numbersOfTilesY);
@@ -64,8 +65,6 @@ public class Level{
 				{
 					int ranColour = random.nextInt(Board.differentKindsOfColours) + 1;    //There are five colours to choose from
 					board.setTileColour(ranValueX, ranValueY, ranColour);
-
-//					wheelArray.get(ranValueX).set(ranValueY, wheelType);
 					board.placeNewWheel(new Vector2(ranValueX, ranValueY), ranColour);
 					i++;
 				} else {
@@ -76,32 +75,53 @@ public class Level{
 				}
 			}
 			while (i < numberOfColouredTiles);
-			i = 0;
 
 			//Place fake wheels
+			i = 0;
 			do {
 				ranValueX = random.nextInt(numbersOfTilesX);
 				ranValueY = random.nextInt(numbersOfTilesY);
 
-				board.placeNewWheel(new Vector2(ranValueX, ranValueY), Wheel.WheelTypes.getRandomValue(random.nextInt(2) + 1));
+				boolean wheelPlacedOk = board.placeNewWheel(new Vector2(ranValueX, ranValueY), Wheel.WheelTypes.getRandomValue(random.nextInt(2) + 1));
+				if (wheelPlacedOk)
+					i++;
+				else
+					falseItterations++;
 
-				i++;
-
-				falseItterations++;
-				if (falseItterations > 100) {
+				if (falseItterations > 100)
 					break;
-				}
 			}
 			while (i < numberOfFakeWheels);
 
 			if (falseItterations >= 100) {
-				Gdx.app.log(TAG, "falseIttterations is more than 100");
+				LogHelper.Log(TAG, "Fake wheels: falseIttterations is more than 100, (X,Y): (" + ranValueX +","+ ranValueY+")", Application.LOG_INFO);
 			}
+
+			//Place Helper wheels
+			i = 0;
+			do {
+				ranValueX = random.nextInt(numbersOfTilesX);
+				ranValueY = random.nextInt(numbersOfTilesY);
+
+				boolean wheelPlacedOk = board.placeNewWheel(new Vector2(ranValueX, ranValueY), Wheel.WheelTypes.getRandomValue(random.nextInt(2) + 1));
+				if (wheelPlacedOk)
+					i++;
+				else
+					falseItterations++;
+
+				if (falseItterations > 100)
+					break;
+			}
+			while (i < numberOfFakeWheels);
+
+			if (falseItterations >= 100) {
+				LogHelper.Log(TAG, "Helper wheels: falseIttterations is more than 100, (X,Y): (" + ranValueX +","+ ranValueY+")", Application.LOG_INFO);
+			}
+			LogHelper.Log(TAG, "Final random number: " + Integer.toString(random.nextInt()), Application.LOG_INFO);
 		}
 
-
 		catch (Exception ex) {
-			Gdx.app.log(TAG, ex.getMessage());
+			LogHelper.Log(TAG, ex.getMessage(), Application.LOG_ERROR);
 		}
 	}
 
