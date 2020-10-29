@@ -11,7 +11,7 @@ public class DesktopLauncher {
 
 		cfg.title = "WheelsAndSquares";
 		cfg.width = 800; //1920;
-		cfg.height = 600; //1080;
+		cfg.height = 800; //1080;
 		PlatformSpecificDesktop platformSpecific = new PlatformSpecificDesktop();
 		new LwjglApplication(new WheelsAndSquares(platformSpecific), cfg);
 	}

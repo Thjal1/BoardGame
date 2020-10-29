@@ -47,13 +47,13 @@ public class Tile extends AbstractActor {
 		}
 
 	}
-	public Tile(WheelsAndSquares _game) {
-		super(_game);
+	public Tile(WheelsAndSquares game) {
+		super(game);
 		create();
 	}
 
-	public Tile(WheelsAndSquares _game, Vector3 position) {
-		super(_game);
+	public Tile(WheelsAndSquares game, Vector3 position) {
+		super(game);
 		create();
 		changePos(position, false);
 	}

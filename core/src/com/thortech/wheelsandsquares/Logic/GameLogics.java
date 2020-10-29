@@ -1,9 +1,8 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Helpers.LogHelper;
+import com.thortech.wheelsandsquares.Scenes.BoardStage;
 import com.thortech.wheelsandsquares.Settings;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
@@ -76,12 +75,12 @@ public class GameLogics {
 		}
 	}
 
-	public Board getCurrentBoard(){
-		return level.getBoard();
+	public BoardStage getCurrentBoard(){
+		return level.board.getBoard();
 	}
 
 	public void dispose()
 	{
-		level.getBoard().dispose();
+		level.board.getBoard().dispose();
 	}
 }

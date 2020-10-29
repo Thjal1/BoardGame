@@ -32,7 +32,7 @@ public class DebugHud {
         fps = 0f;
         cameraX = 0f;
 
-        viewport = new FitViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();

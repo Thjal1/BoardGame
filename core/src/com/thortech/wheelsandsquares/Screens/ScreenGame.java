@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
 import com.thortech.wheelsandsquares.AbstractGameScreen;
-import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Logic.GameLogics;
+import com.thortech.wheelsandsquares.Scenes.BoardStage;
 import com.thortech.wheelsandsquares.Scenes.DebugHud;
 import com.thortech.wheelsandsquares.Scenes.Hud;
 import com.thortech.wheelsandsquares.Settings;
@@ -22,7 +22,7 @@ public class ScreenGame extends AbstractGameScreen {
     private static final String TAG = com.thortech.wheelsandsquares.Screens.ScreenGame.class.getName();
 
     private GameLogics logics;
-    private Board board;     //= new Board(game);
+    private BoardStage boardStage;
 
     private OrthographicCamera cameraGame;      //For the game play
 
@@ -34,31 +34,30 @@ public class ScreenGame extends AbstractGameScreen {
 
 
 
-    public ScreenGame(WheelsAndSquares _game) {
-            super(_game);
+    public ScreenGame(WheelsAndSquares game) {
+            super(game);
             cameraGame = new OrthographicCamera();
             cameraGame.setToOrtho(false, Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT);
 
-            //viewPort = new StretchViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, cameraGame);
-            //viewPort = new ExtendViewport(Settings.PHYSICALWIDTH, Settings.PHYSICALHEIGHT, Settings.PHYSICALWIDTH*2, Settings.PHYSICALHEIGHT*2, cameraGame);
             viewPort = new FitViewport(cameraGame.viewportWidth, cameraGame.viewportHeight, cameraGame);
             viewPort.apply(true);
 
-            hud = new Hud(game);
+            boardStage = new BoardStage(this.game);
+            hud = new Hud(this.game);
 
             if (WheelsAndSquares.platformSpecific.isDebug()) {
-                debugHud = new DebugHud(game.batch);
+                debugHud = new DebugHud(this.game.batch);
             }
 
             cameraGame.position.set(viewPort.getWorldWidth() / 2, viewPort.getWorldHeight() / 2, 0);
 
-            logics = new GameLogics(game);
+            logics = new GameLogics(this.game);
 
             //Load level
 
-            board = logics.getCurrentBoard();
+            boardStage = logics.getCurrentBoard();
             boardVector = new Vector3(cameraGame.position.x, cameraGame.position.y, 0);
-            board.changePos(boardVector, true);
+            boardStage.changePos(boardVector, true);
 
     }
 
@@ -67,6 +66,7 @@ public class ScreenGame extends AbstractGameScreen {
 
     public void update(float dt) {
         handlInput(dt);
+        hud.update(dt);
 
         }
 
@@ -88,18 +88,18 @@ public class ScreenGame extends AbstractGameScreen {
         //Let the fun begin
         game.batch.setProjectionMatrix(cameraGame.combined);
         cameraGame.update();
-        hud.update(delta);
 
         game.batch.begin();
         //Render the board
-        board.render(delta);
+        boardStage.render(delta);
 
         game.batch.end();
 
 
+
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.getCamera().update();
-        hud.update(delta);
+        hud.stage.draw();
 
         if (WheelsAndSquares.platformSpecific.isDebug()) {
             game.batch.setProjectionMatrix(debugHud.stage.getCamera().combined);
@@ -114,11 +114,14 @@ public class ScreenGame extends AbstractGameScreen {
     public void resize(int width, int height) {
         Settings.resizeScreenPixels(width, height);
         viewPort.update(width, height, true);
+        boardStage.resize(width, height);
+        //hud.resize(width, height);
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(boardStage.stage);
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override

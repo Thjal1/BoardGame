@@ -1,13 +1,10 @@
 package com.thortech.wheelsandsquares.Logic;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.thortech.wheelsandsquares.Actors.AbstractActor;
-import com.thortech.wheelsandsquares.Actors.Board;
 import com.thortech.wheelsandsquares.Actors.Wheel;
 import com.thortech.wheelsandsquares.Helpers.LogHelper;
+import com.thortech.wheelsandsquares.Scenes.BoardStage;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 import java.util.Random;
@@ -21,7 +18,7 @@ public class Level{
 	private int numbersOfTilesY;
 	private Random random = new Random();
 
-	private static Board board;
+	static BoardStage board;
 
 	public Level () {
 		LoadLevel();
@@ -38,7 +35,7 @@ public class Level{
 
 	public void createBoard(int randomSeed, int levelNumber, int numbersOfTilesX, int numbersOfTilesY, int numberOfColouredTiles, int numberOfHelperWheels, int numberOfFakeWheels, int numberOfDraws, WheelsAndSquares game) {
 		try {
-			board = new Board(game);
+			board = new BoardStage(game);
 
 			random.setSeed(randomSeed);
 
@@ -63,7 +60,7 @@ public class Level{
 
 				if (board.getTileColourValue(ranValueX, ranValueY) == 0)
 				{
-					int ranColour = random.nextInt(Board.differentKindsOfColours) + 1;    //There are five colours to choose from
+					int ranColour = random.nextInt(BoardStage.differentKindsOfColours) + 1;    //There are five colours to choose from
 					board.setTileColour(ranValueX, ranValueY, ranColour);
 					board.placeNewWheel(new Vector2(ranValueX, ranValueY), ranColour);
 					i++;
@@ -125,8 +122,4 @@ public class Level{
 		}
 	}
 
-	public Board getBoard()
-	{
-		return board;
-	}
 }

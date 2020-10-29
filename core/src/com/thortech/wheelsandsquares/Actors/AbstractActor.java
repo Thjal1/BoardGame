@@ -1,12 +1,13 @@
 package com.thortech.wheelsandsquares.Actors;
 
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.thortech.wheelsandsquares.WheelsAndSquares;
 
 /**
  * Created by ToHj on 28-02-2016.
  */
-public abstract class AbstractActor {
+public abstract class AbstractActor extends Actor {
 
 	protected WheelsAndSquares game;
 	protected static String objName;

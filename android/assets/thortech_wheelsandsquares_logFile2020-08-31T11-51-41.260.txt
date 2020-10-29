@@ -1,2 +1,0 @@
-Info - com.thortech.wheelsandsquares.Logic.Level: Final random number: 1849812016
-Info - com.thortech.wheelsandsquares.WheelsAndSquares: Created OK
